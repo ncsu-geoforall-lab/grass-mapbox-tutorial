@@ -15,6 +15,10 @@
 3. From your new repository click settings
 ![GitHub Settings](./images/GitHubSettings.png)
 
+4. From the settings page scroll down until you see *GitHub Pages* from the dropdown select *master branch*
+
+![GitHub gh-pages](./images/readmeGHPages.png)
+
 ## GRASS
 1. Download GRASS 7.6.0
 1. Run your favorite simulation
@@ -26,12 +30,16 @@
 3. go to https://docs.mapbox.com/mapbox-gl-js/example/animate-images/
 4. Create an empty file called index.html and copy and paste the following code into the document. [Original Code From MapBox](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
 
+5. Now all of your code will be hosted by GitHub at
+https://<YourGitHubUserName>.github.io/GRASS_MapBoxGL_Tutorial/
+
+
 ```html
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Animate a series of images</title>
+    <title>GRASS Animate Simulation</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
@@ -44,49 +52,16 @@
 
 <div id='map'></div>
 <script>
+
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v9',
-    maxZoom: 5.99,
-    minZoom: 4,
-    zoom: 5,
-    center: [-75.789, 41.874]
+    zoom: 12,
+    center: [-78.6319,35.7099],
+    pitch: 45,
+    style: 'mapbox://styles/mapbox/satellite-v9'
 });
 
-var frameCount = 5;
-var currentImage = 0;
-
-function getPath() {
-    return "https://docs.mapbox.com/mapbox-gl-js/assets/radar" + currentImage + ".gif";
-}
-
-map.on('load', function() {
-
-    map.addSource("radar", {
-        type: "image",
-        url: getPath(),
-        coordinates: [
-            [-80.425, 46.437],
-            [-71.516, 46.437],
-            [-71.516, 37.936],
-            [-80.425, 37.936]
-        ]
-    });
-    map.addLayer({
-        id: "radar-layer",
-        "type": "raster",
-        "source": "radar",
-        "paint": {
-            "raster-fade-duration": 0
-        }
-    });
-
-    setInterval(function() {
-        currentImage = (currentImage + 1) % frameCount;
-        map.getSource("radar").updateImage({ url: getPath() });
-    }, 200);
-});
 </script>
 
 </body>
