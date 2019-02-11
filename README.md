@@ -12,7 +12,8 @@
 ## GitHub
 1. Create [GitHub Account](https://github.com/) 
 2. Create new [GitHub Repository](https://help.github.com/articles/creating-a-new-repository) 
-3. G
+3. From your new repository click settings
+![GitHub Settings](./images/GitHubSettings.png)
 
 ## GRASS
 1. Download GRASS 7.6.0
