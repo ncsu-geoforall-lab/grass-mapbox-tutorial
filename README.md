@@ -51,7 +51,7 @@ Inside of data_file.js you will see the name of each of your new png files and t
 ## MapBox
 1. Create an empty file in your project call index.html and copy the following code into the document.
 
-``html
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -179,16 +179,15 @@ map.on('load', function() {
  
 });
 
-Now when you load your index.html into the browser you should see the animation.
-
 ```
 
+Now when you load your index.html into the browser you should see the animation.
 
 
- [Original Code From MapBox](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
+ 
 
 
-
+**This is what your index.html file should now look like with the mapbox token replaced**
 
 ```html
 <!DOCTYPE html>
@@ -207,8 +206,11 @@ Now when you load your index.html into the browser you should see the animation.
 <body>
 
 <div id='map'></div>
+<!-- Loads data from data_file.js -->
+<script src="./images/data_file.js">
 <script>
 
+//Sets up the map
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
 var map = new mapboxgl.Map({
     container: 'map',
@@ -218,11 +220,51 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/satellite-v9'
 });
 
+//The total numbers of images found in data_file.js 
+var frameCount = layerInfo.length;
+//Default used to start animation with first image
+var currentImage = 0;
+ 
+//Gets the current images 
+function getPath() {
+    return `./images/${layerInfos[currentImage].file}`;
+}
+ 
+//We need to wait for the map to load before we add the raster layer
+map.on('load', function() {
+ 
+    //Create a new map source with the bounding box and url to your raster data.
+    map.addSource("grass", {
+        type: "image",
+        //Replace static file with function
+        url: getPath(), 
+        //Gets the bounds of the first image listed in images/data_file.js
+        coordinates: `./images/${layerInfos[0].bounds}`
+    });
+
+    //Now add a new layer to the map from the source you created
+    map.addLayer({
+        id: "grass-layer",
+        "type": "raster",
+        "source": "grass",
+        "paint": {
+            "raster-fade-duration": 0
+        }
+    });
+
+    //Will change image every 200ms
+    setInterval(function() {
+        currentImage = (currentImage + 1) % frameCount;
+        map.getSource("grass").updateImage({ url: getPath() });
+    }, 200);
+ 
+});
+
 </script>
 
 </body>
 </html>
 ```
 
-
+[Original Code From MapBox](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
 
