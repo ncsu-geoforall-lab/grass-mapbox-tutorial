@@ -116,6 +116,16 @@ map.addControl(new mapboxgl.NavigationControl());
 
 ```js
 
+//Convert Bounds to match mapbox gl source specs
+function grassBbox(bounds) {
+    return [
+        [bounds[1][1], bounds[1][0]],
+        [bounds[0][1], bounds[1][0]],
+        [bounds[0][1], bounds[0][0]],           
+        [bounds[1][1], bounds[0][0]]
+    ];
+}
+
 //We need to wait for the map to load before we add the raster layer
 map.on('load', function() {
  
@@ -123,9 +133,9 @@ map.on('load', function() {
     map.addSource("grass", {
         type: "image",
         //Gets the first image listed in images/data_file.js
-        url: `./images/${layerInfos[0].file}`, 
+        url: "./images/" + layerInfos[0].file, 
         //Gets the bounds of the first image listed in images/data_file.js
-        coordinates: `./images/${layerInfos[0].bounds}`
+        coordinates: grassBbox(layerInfos[0].bounds)
     });
 
     //Now add a new layer to the map from the source you created
@@ -146,13 +156,23 @@ map.on('load', function() {
 
 ```js
 //The total numbers of images found in data_file.js 
-var frameCount = layerInfo.length;
+var frameCount = layerInfos.length;
 //Default used to start animation with first image
 var currentImage = 0;
 
 //Gets the current image
 function getPath() {
-    return `./images/${layerInfos[currentImage].file}`;
+    return "images/" + layerInfos[currentImage].file;
+}
+
+//Convert Bounds to match mapbox gl source specs
+function grassBbox(bounds) {
+    return [
+        [bounds[1][1], bounds[1][0]],
+        [bounds[0][1], bounds[1][0]],
+        [bounds[0][1], bounds[0][0]],           
+        [bounds[1][1], bounds[0][0]]
+    ];
 }
  
 //We need to wait for the map to load before we add the raster layer
@@ -164,7 +184,7 @@ map.on('load', function() {
         //Replace static file with function
         url: getPath(), 
         //Gets the bounds of the first image listed in images/data_file.js
-        coordinates: `./images/${layerInfos[0].bounds}`
+        coordinates: grassBbox(layerInfos[0].bounds)
     });
 
     //Now add a new layer to the map from the source you created
@@ -209,9 +229,9 @@ Now when you load your index.html into the browser you should see the animation.
 
 <div id='map'></div>
 <!-- Loads data from data_file.js -->
-<script src="./images/data_file.js">
-<script>
+<script src="./images/data_file.js"></script>
 
+<script>
 //Sets up the map
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
 var map = new mapboxgl.Map({
@@ -222,14 +242,27 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/mapbox/satellite-v9'
 });
 
+//Add Navigation Controls
+map.addControl(new mapboxgl.NavigationControl());
+
 //The total numbers of images found in data_file.js 
-var frameCount = layerInfo.length;
+var frameCount = layerInfos.length;
 //Default used to start animation with first image
 var currentImage = 0;
  
 //Gets the current image 
 function getPath() {
-    return `./images/${layerInfos[currentImage].file}`;
+   return "images/" + layerInfos[currentImage].file;
+}
+
+//Convert Bounds to match mapbox gl source specs
+function grassBbox(bounds) {
+    return [
+        [bounds[1][1], bounds[1][0]],
+        [bounds[0][1], bounds[1][0]],
+        [bounds[0][1], bounds[0][0]],           
+        [bounds[1][1], bounds[0][0]]
+    ];
 }
  
 //We need to wait for the map to load before we add the raster layer
@@ -241,7 +274,7 @@ map.on('load', function() {
         //Replace static file with function
         url: getPath(), 
         //Gets the bounds of the first image listed in images/data_file.js
-        coordinates: `./images/${layerInfos[0].bounds}`
+        coordinates: grassBbox(layerInfos[0].bounds)
     });
 
     //Now add a new layer to the map from the source you created
