@@ -71,7 +71,7 @@ Inside of data_file.js you will see the name of each of your new png files and t
 <body>
 
 <div id='map'></div>
-<script src="./images/data_file.js">
+<script src="./images/data_file.js"></script>
 <script>
 //Sets up the map
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
