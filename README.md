@@ -25,6 +25,8 @@ https://<YourGitHubUserName>.github.io/GRASS_MapBoxGL_Tutorial/
 
 ## GRASS
 
+> Install GRASS GIS if you don't have it
+
 1. Run your favorite simulation
 2. Use r.out.leaflet to generate bbox and pngs
     1. Inside of the images directory clone grass-web-publishing
@@ -142,11 +144,13 @@ map.on('load', function() {
 7. Now we will create an animation from the images
 
 ```js
+//The total numbers of images found in data_file.js 
 var frameCount = layerInfo.length;
+//Default used to start animation with first image
 var currentImage = 0;
- 
+
+//Gets the current image
 function getPath() {
-    
     return `./images/${layerInfos[currentImage].file}`;
 }
  
@@ -172,6 +176,7 @@ map.on('load', function() {
         }
     });
 
+    //Will update image every 200ms
     setInterval(function() {
         currentImage = (currentImage + 1) % frameCount;
         map.getSource("grass").updateImage({ url: getPath() });
@@ -225,7 +230,7 @@ var frameCount = layerInfo.length;
 //Default used to start animation with first image
 var currentImage = 0;
  
-//Gets the current images 
+//Gets the current image 
 function getPath() {
     return `./images/${layerInfos[currentImage].file}`;
 }
@@ -252,7 +257,7 @@ map.on('load', function() {
         }
     });
 
-    //Will change image every 200ms
+    //Will update image every 200ms
     setInterval(function() {
         currentImage = (currentImage + 1) % frameCount;
         map.getSource("grass").updateImage({ url: getPath() });
