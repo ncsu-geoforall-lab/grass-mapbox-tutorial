@@ -12,9 +12,7 @@
 ## GitHub
 1. Create [GitHub Account](https://github.com/) 
 2. Fork and clone this project or create your own [GitHub Repository](https://help.github.com/articles/creating-a-new-repository) 
-```
 
-```
 3. From your new repository click settings
 ![GitHub Settings](./images/readme/GitHubSettings.png)
 
@@ -24,7 +22,7 @@
 
 5. Now all of your code will be hosted by GitHub at
 
-https://<YourGitHubUserName>.github.io/GRASS_MapBoxGL_Tutorial/
+https://YourGitHubUserName.github.io/GRASS_MapBoxGL_Tutorial/
 
 ## GRASS
 
