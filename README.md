@@ -209,6 +209,51 @@ map.on('load', function() {
 
 Now when you load your index.html into the browser you should see the animation.
 
+8. Optional: Add 3d buildings
+
+```js
+//Optional Add 3d Buildings so that they are visible above flooding
+if (! map.getSource('composite')) {map.addSource('composite', { type: 'vector', url: 'mapbox://mapbox.mapbox-streets-v7'});}
+
+var layers = map.getStyle().layers;
+
+var labelLayerId;
+for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+    labelLayerId = layers[i].id;
+    break;
+    }
+}
+
+
+//Add 3d Buildings layer
+map.addLayer({
+    'id': '3d-buildings',
+    'source': 'composite',
+    'source-layer': 'building',
+    'filter': ['==', 'extrude', 'true'],
+    'type': 'fill-extrusion',
+    'minzoom': 14,
+    'paint': {
+        'fill-extrusion-color': '#aaa',
+        // use an 'interpolate' expression to add a smooth transition effect to the
+        // buildings as the user zooms in
+        'fill-extrusion-height': [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0,
+            14.05, ["get", "height"]
+        ],
+        'fill-extrusion-base': [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0,
+            14.05, ["get", "min_height"]
+        ],
+        'fill-extrusion-opacity': 0.8
+        }
+    }, labelLayerId);
+
+```
+
 **This is what your index.html file should now look like with the mapbox token replaced**
 
 ```html
@@ -292,7 +337,48 @@ map.on('load', function() {
         currentImage = (currentImage + 1) % frameCount;
         map.getSource("grass").updateImage({ url: getPath() });
     }, 200);
- 
+
+
+    //Optional Add 3d Buildings so that they are visible above flooding
+    if (! map.getSource('composite')) {map.addSource('composite', { type: 'vector', url: 'mapbox://mapbox.mapbox-streets-v7'});}
+
+    var layers = map.getStyle().layers;
+
+    var labelLayerId;
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+        labelLayerId = layers[i].id;
+        break;
+        }
+    }
+
+
+    //Add 3d Buildings layer
+    map.addLayer({
+        'id': '3d-buildings',
+        'source': 'composite',
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 14,
+        'paint': {
+            'fill-extrusion-color': '#aaa',
+            // use an 'interpolate' expression to add a smooth transition effect to the
+            // buildings as the user zooms in
+            'fill-extrusion-height': [
+                "interpolate", ["linear"], ["zoom"],
+                14, 0,
+                14.05, ["get", "height"]
+            ],
+            'fill-extrusion-base': [
+                "interpolate", ["linear"], ["zoom"],
+                14, 0,
+                14.05, ["get", "min_height"]
+            ],
+            'fill-extrusion-opacity': 0.8
+            }
+        }, labelLayerId);
+    
 });
 
 </script>

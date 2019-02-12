@@ -78,11 +78,8 @@
             currentImage = (currentImage + 1) % frameCount; 
             map.getSource("grass").updateImage({ url: getPath() });
         }, 200);
-    
-    });
 
-
-//Optional Add 3d Buildings so that they are visible above flooding
+        //Optional Add 3d Buildings so that they are visible above flooding
 if (! map.getSource('composite')) {map.addSource('composite', { type: 'vector', url: 'mapbox://mapbox.mapbox-streets-v7'});}
 
 var layers = map.getStyle().layers;
@@ -121,6 +118,11 @@ map.addLayer({
         'fill-extrusion-opacity': 0.8
         }
     }, labelLayerId);
+    
+    });
+
+
+
 
 </script>
 
