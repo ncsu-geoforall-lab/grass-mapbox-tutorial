@@ -10,7 +10,7 @@ r.to.vect input=streams output=streams type=line --overwrite
 r.stream.distance stream_rast=streams direction=drainage elevation=elevation method=downstream difference=above_stream --overwrite
 r.lake.series elevation=above_stream start_water_level=0 end_water_level=4 water_level_step=0.5 output=inun seed_raster=streams --overwrite
 
-#Get List of new images
+#Get r.out.leaflet plugin
 DIRECTORY=./images/grass-web-publishing
 if [ ! -d "$DIRECTORY" ]; then
   git clone https://github.com/ncsu-geoforall-lab/grass-web-publishing.git
