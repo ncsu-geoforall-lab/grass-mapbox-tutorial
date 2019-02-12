@@ -72,7 +72,7 @@ Inside of data_file.js you will see the name of each of your new png files and t
 <div id='map'></div>
 <script src="./images/data_file.js">
 <script>
-
+//Sets up the map
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
 var map = new mapboxgl.Map({
     container: 'map',
@@ -92,11 +92,11 @@ var map = new mapboxgl.Map({
 
 3. Once you are logged into MapBox retrieve your public token from [https://account.mapbox.com/](https://account.mapbox.com/)
 
-4. Replace '<YOUR MAPBOX TOKEN>' from the index.html file you just created with your public token.
+4. Replace <YOUR MAPBOX TOKEN> from the index.html file you just created with your public token.
 
 5. Add navigation controls to the map
 ```js
-
+//Sets up the map
 mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
 var map = new mapboxgl.Map({
     container: 'map',
@@ -187,10 +187,6 @@ map.on('load', function() {
 ```
 
 Now when you load your index.html into the browser you should see the animation.
-
-
- 
-
 
 **This is what your index.html file should now look like with the mapbox token replaced**
 
