@@ -387,5 +387,20 @@ map.on('load', function() {
 </html>
 ```
 
-[Original Code From MapBox](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
+## Almost Done
+
+Now lets push your code to github and see what you have done
+
+```
+git add .
+git commit -m "Init Fancy Map"
+git push origin master
+```
+
+Now your map should be live at 
+
+https://YourGitHubUserName.github.io/GRASS_MapBoxGL_Tutorial/
+
+
+[Code Modified From MapBoxGL JS Docs](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
 
