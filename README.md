@@ -11,7 +11,10 @@
 
 ## GitHub
 1. Create [GitHub Account](https://github.com/) 
-2. Create new [GitHub Repository](https://help.github.com/articles/creating-a-new-repository) 
+2. Fork and clone this project or create your own [GitHub Repository](https://help.github.com/articles/creating-a-new-repository) 
+```
+
+```
 3. From your new repository click settings
 ![GitHub Settings](./images/readme/GitHubSettings.png)
 
@@ -51,7 +54,7 @@ You will now see a few new files in the images directory
 Inside of data_file.js you will see the name of each of your new png files and the bounding boxes. We will load this file into our html document to get access to this information later.
 
 ## MapBox
-1. Create an empty file in your project call index.html and copy the following code into the document.
+1. Create an empty file in your project called index.html and copy the following code into the document.
 
 ```html
 <!DOCTYPE html>
