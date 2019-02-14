@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>GRASS Animate Simulation</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<script src="./images/data_file.js"></script>
+<script>
+//Sets up the map
+mapboxgl.accessToken = '<YOUR MAPBOX TOKEN>';
+var map = new mapboxgl.Map({
+    container: 'map',
+    zoom: 12,
+    center: [-78.6319,35.7099],
+    pitch: 45,
+    style: 'mapbox://styles/mapbox/satellite-v9'
+});
+
+//Add Navigation Controls
+map.addControl(new mapboxgl.NavigationControl());
+
+
+//Convert Bounds to match mapbox gl source specs
+function grassBbox(bounds) {
+    return [
+        [bounds[1][1], bounds[1][0]],
+        [bounds[0][1], bounds[1][0]],
+        [bounds[0][1], bounds[0][0]],           
+        [bounds[1][1], bounds[0][0]]
+    ];
+}
+
+//We need to wait for the map to load before we add the raster layer
+map.on('load', function() {
+ 
+    //Create a new map source with the bounding box and url to your raster data.
+    map.addSource("grass", {
+        type: "image",
+        //Gets the first image listed in images/data_file.js
+        url: "./images/" + layerInfos[0].file, 
+        //Gets the bounds of the first image listed in images/data_file.js
+        coordinates: grassBbox(layerInfos[0].bounds)
+    });
+
+    //Now add a new layer to the map from the source you created
+    map.addLayer({
+        id: "grass-layer",
+        "type": "raster",
+        "source": "grass",
+        "paint": {
+            "raster-fade-duration": 0
+        }
+    });
+ 
+});
+
+</script>
+
+</body>
+</html>
