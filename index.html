@@ -29,6 +29,15 @@ var map = new mapboxgl.Map({
 //Add Navigation Controls
 map.addControl(new mapboxgl.NavigationControl());
 
+//The total numbers of images found in data_file.js 
+var frameCount = layerInfos.length;
+//Default used to start animation with first image
+var currentImage = 0;
+
+//Gets the current image
+function getPath() {
+    return "images/" + layerInfos[currentImage].file;
+}
 
 //Convert Bounds to match mapbox gl source specs
 function grassBbox(bounds) {
@@ -39,15 +48,15 @@ function grassBbox(bounds) {
         [bounds[1][1], bounds[0][0]]
     ];
 }
-
+ 
 //We need to wait for the map to load before we add the raster layer
 map.on('load', function() {
  
     //Create a new map source with the bounding box and url to your raster data.
     map.addSource("grass", {
         type: "image",
-        //Gets the first image listed in images/data_file.js
-        url: "./images/" + layerInfos[0].file, 
+        //Replace static file with function
+        url: getPath(), 
         //Gets the bounds of the first image listed in images/data_file.js
         coordinates: grassBbox(layerInfos[0].bounds)
     });
@@ -61,6 +70,53 @@ map.on('load', function() {
             "raster-fade-duration": 0
         }
     });
+
+    //Will update image every 200ms
+    setInterval(function() {
+        currentImage = (currentImage + 1) % frameCount;
+        map.getSource("grass").updateImage({ url: getPath() });
+    }, 200);
+    
+    //Optional Add 3d Buildings so that they are visible above flooding
+if (! map.getSource('composite')) {map.addSource('composite', { type: 'vector', url: 'mapbox://mapbox.mapbox-streets-v7'});}
+
+var layers = map.getStyle().layers;
+
+var labelLayerId;
+for (var i = 0; i < layers.length; i++) {
+    if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
+    labelLayerId = layers[i].id;
+    break;
+    }
+}
+
+
+//Add 3d Buildings layer
+map.addLayer({
+    'id': '3d-buildings',
+    'source': 'composite',
+    'source-layer': 'building',
+    'filter': ['==', 'extrude', 'true'],
+    'type': 'fill-extrusion',
+    'minzoom': 14,
+    'paint': {
+        'fill-extrusion-color': '#aaa',
+        // use an 'interpolate' expression to add a smooth transition effect to the
+        // buildings as the user zooms in
+        'fill-extrusion-height': [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0,
+            14.05, ["get", "height"]
+        ],
+        'fill-extrusion-base': [
+            "interpolate", ["linear"], ["zoom"],
+            14, 0,
+            14.05, ["get", "min_height"]
+        ],
+        'fill-extrusion-opacity': 0.8
+        }
+    }, labelLayerId);
+
  
 });
 
