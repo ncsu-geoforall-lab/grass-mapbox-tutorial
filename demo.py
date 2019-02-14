@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-
 import grass.script as gscript
 
 def main():

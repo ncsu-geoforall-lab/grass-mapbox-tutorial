@@ -30,17 +30,23 @@ https://YourGitHubUserName.github.io/GRASS_MapBoxGL_Tutorial/
 
 1. Run your favorite simulation
 2. Use r.out.leaflet to generate bbox and pngs
-    1. Inside of the images directory clone grass-web-publishing
+    1. clone grass-web-publishing into the main project directory
     ```
     git clone https://github.com/ncsu-geoforall-lab/grass-web-publishing.git
     ```
 
 > Full code at [https://github.com/ncsu-geoforall-lab/grass-web-publishing](https://github.com/ncsu-geoforall-lab/grass-web-publishing) thanks Vaclav!
 
-3. From a running GRASS Session run the following in the terminal.
+3. Inside the new grass-web-publishing directory you will find r.out.leaflet.py located inside the r.out.leaflet directory 
+4. Find your running GRASS Session terminal and type python then drag the r.out.leaflet.py file into the terminal
+> Note: Dragging files into the terminal will add the absolute path to the file
+
+5. Add the rasters you would like to export to the raster parameter as a comma seperated list, and set the output directory, so that the new images will be in this projects images folder. 
+
+> It should look something like this, but you will need to update the paths.
 
 ```
-python ./r.out.leaflet/r.out.leaflet.py raster="example1,example2,example3" output="../images"
+python r.out.leaflet.py raster="inundation_0.0,inundation_0.5,inundation_1.0,inundation_1.5,inundation_2.0,inundation_2.5,inundation_3.0,inundation_3.5,inundation_4.0,inundation_4.5,inundation_5.0" output="./images"
 ```
 
 You will now see a few new files in the images directory
