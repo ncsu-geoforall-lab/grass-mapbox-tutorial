@@ -22,7 +22,7 @@
 
 5. Now all of your code will be hosted by GitHub at
 
-https://YourGitHubUserName.github.io/GRASS_MapBoxGL_Tutorial/
+https://YourGitHubUserName.github.io/grass-mapbox-tutorial/
 
 ## GRASS
 
@@ -405,7 +405,7 @@ git push origin master
 
 Now your map should be live at 
 
-https://YourGitHubUserName.github.io/GRASS_MapBoxGL_Tutorial/
+https://YourGitHubUserName.github.io/grass-mapbox-tutorial/
 
 
 [Code Modified From MapBoxGL JS Docs](https://docs.mapbox.com/mapbox-gl-js/example/animate-images/)
